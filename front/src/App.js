@@ -1,4 +1,5 @@
 import React, { useContext, useReducer, useEffect, useRef, useState, createContext } from 'react';
+import Styled from './App.module.css';
 
 const HOST_API = "http://localhost:8080/api";
 const initialState = {
@@ -63,8 +64,8 @@ const Form = () => {
       });
   }
 
-  return <form ref={formRef}>
-    <input
+  return <form className={Styled.bodyForm} ref={formRef}>
+    <input className={Styled.inputPrincipal}
       type="text"
       name="name"
       placeholder="¿Qué piensas hacer hoy?"
@@ -73,7 +74,7 @@ const Form = () => {
         setState({ ...state, name: event.target.value })
       }}  ></input>
     {item.id && <button onClick={onEdit}>Actualizar</button>}
-    {!item.id && <button onClick={onAdd}>Crear</button>}
+    {!item.id && <button className={Styled.btnCrear} onClick={onAdd}>Crear</button>}
   </form>
 }
 
@@ -125,7 +126,7 @@ const List = () => {
   const decorationDone = {
     textDecoration: 'line-through'
   };
-  return <div>
+  return <div className={Styled.divPrincipal}>
     <table >
       <thead>
         <tr>
@@ -134,14 +135,14 @@ const List = () => {
           <td>¿Completado?</td>
         </tr>
       </thead>
-      <tbody>
+      <tbody className = {Styled.bodyTable}>
         {currentList.map((todo) => {
           return <tr key={todo.id} style={todo.completed ? decorationDone : {}}>
             <td>{todo.id}</td>
             <td>{todo.name}</td>
             <td><input type="checkbox" defaultChecked={todo.completed} onChange={(event) => onChange(event, todo)}></input></td>
-            <td><button onClick={() => onDelete(todo.id)}>Eliminar</button></td>
-            <td><button onClick={() => onEdit(todo)}>Editar</button></td>
+            <td><button className={Styled.btnEliminar} onClick={() => onDelete(todo.id)}>Eliminar</button></td>
+            <td><button className={Styled.btnEditar} onClick={() => onEdit(todo)}>Editar</button></td>
           </tr>
         })}
       </tbody>
@@ -199,7 +200,7 @@ const StoreProvider = ({ children }) => {
 
 function App() {
   return <StoreProvider>
-    <h3>To-Do List</h3>
+    <h3 className = {Styled.container}>To-Do List</h3>
     <Form />
     <List />
   </StoreProvider>
